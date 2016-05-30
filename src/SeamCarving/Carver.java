@@ -21,8 +21,5 @@ public class Carver {
 
     }
 
-
-
-    public static get_energy_map()
 }
 
