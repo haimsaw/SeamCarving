@@ -29,7 +29,7 @@ public class Carver {
                 ret[i][j] = new MyColor(0.5,0.5,0.5);
             }
         }
-        ret[]
+        ret[0][0] = new MyColor(1,1,1);
         return ret;
     }
 
