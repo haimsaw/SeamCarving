@@ -18,7 +18,19 @@ public class Carver {
 
         MyColor[][] img = GetImage(input_image_filename);
 
+        double[][] map =  Energizer.energy(img);
+        return ;
+    }
 
+    private static MyColor[][] GetImage(String input_image_filename) {
+        MyColor[][] ret = new  MyColor[5][5];
+        for (int i = 0;i<5;i++){
+            for (int j = 0;j<5;j++){
+                ret[i][j] = new MyColor(0.5,0.5,0.5);
+            }
+        }
+        ret[]
+        return ret;
     }
 
 }

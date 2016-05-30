@@ -2,17 +2,17 @@ package SeamCarving;
 import static java.lang.Math.abs;
 
 public class MyColor {
-    public float r;
-    public float g;
-    public float b;
+    public double r;
+    public double g;
+    public double b;
 
-    public MyColor(float r, float g, float b) {
+    public MyColor(double r, double g, double b) {
         this.r = r;
         this.g = g;
         this.b = b;
     }
 
-    public float norma1(MyColor other){
+    public double norma1(MyColor other){
         return (abs(this.r - other.r) + abs(this.g - other.g) + abs(this.b - other.b))/3;
     }
 }
