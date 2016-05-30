@@ -16,7 +16,8 @@ public class Carver {
         String output_image_filename = args[4];
 
 
-        MyColor[][] img = GetImage(input_image_filename);
+        MyColor[][] img = Services.getImage(input_image_filename);
+
 
 
     }
