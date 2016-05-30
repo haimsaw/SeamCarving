@@ -11,6 +11,6 @@ public class MyColor {
         this.g = g;
         this.b = b;
     }
-    
+
 
 }
