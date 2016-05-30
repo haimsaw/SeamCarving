@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Carver {
 
-    public static void main(String [ ] args){
+    public static void main(String [] args){
         String input_image_filename = args[0];
         int num_of_colums = Integer.parseInt(args[1]);
         int num_of_rows = Integer.parseInt(args[2]);
