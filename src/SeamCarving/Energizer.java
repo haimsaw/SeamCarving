@@ -6,10 +6,10 @@ public class Energizer {
     public static double[][] energy(MyColor[][] image){
         int width = image.length;
         int height = image[0].length;
-        double[][] energyMap = new double[width][height];
+        double[][] energyMap = new double[height][width];
 
-        for (int i=0;i<width;i++){
-            for (int j=0;j<height;j++){
+        for (int i=0;i<height;i++){
+            for (int j=0;j<width;j++){
                 int num_of_nebors = 0;
                 double energy = 0;
 
@@ -19,7 +19,7 @@ public class Energizer {
                             continue;
                         }
                         try {
-                            energy += image[i+width_diff][j+height_diff].norma1(image[i][j]);
+                            energy += image[i+height_diff][j+width_diff].norma1(image[i][j]);
                             num_of_nebors ++;
                         }
                         catch (ArrayIndexOutOfBoundsException e){
@@ -41,15 +41,15 @@ public class Energizer {
 
         int width = energy.length;
         int height = energy[0].length;
-        double[][] result = new double[width][height];
+        double[][] result = new double[height][width];
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
 
                 double min = 100;//Double.MAX_VALUE;
                 for (int width_diff = -1; width_diff <= 1; width_diff++) {
                     try {
-                        double neighborResult = result[j-1][i + width_diff];
+                        double neighborResult = result[i -1][j+width_diff];
                         if (neighborResult < min) {
                             min = neighborResult;
                         }
