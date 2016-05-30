@@ -13,9 +13,11 @@ public class Energizer {
                 int num_of_nebors = 0;
                 double energy = 0;
 
-                for (int height_diff = -1; height_diff<=1;height_diff+=2){
-                    for (int width_diff = -1; width_diff<=1; width_diff+=2){
-
+                for (int height_diff = -1; height_diff<=1;height_diff++){
+                    for (int width_diff = -1; width_diff<=1; width_diff++){
+                        if (width_diff==0 && height_diff==0){
+                            continue;
+                        }
                         try {
                             energy += image[i+width_diff][j+height_diff].norma1(image[i][j]);
                             num_of_nebors ++;

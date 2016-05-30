@@ -18,6 +18,9 @@ public class Carver {
 
         MyColor[][] img = Services.getImage(input_image_filename);
 
+        double[][] map =  Energizer.energy(img);
+        return ;
+    }
 
 
     }

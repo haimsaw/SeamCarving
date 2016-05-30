@@ -15,4 +15,9 @@ public class MyColor {
     public double norma1(MyColor other){
         return (abs(this.r - other.r) + abs(this.g - other.g) + abs(this.b - other.b))/3;
     }
+
+
+    public String toString() {
+        return String.format("%f, %f, %f", r, g, b);
+    }
 }
