@@ -16,14 +16,23 @@ public class Carver {
         String output_image_filename = args[4];
 
 
-        MyColor[][] img = Services.getImage(input_image_filename);
+//        MyColor[][] img = Services.getImage(input_image_filename);
 
-        double[][] map =  Energizer.energy(img);
-        return ;
+        MyColor[][] img = new MyColor[5][5];
+        for (int i=0; i<5; i++) {
+            for (int j=0; j<5; j++) {
+                img[i][j] = new MyColor(0.5, 0.5, 0.5);
+            }
+        }
+
+        img[2][2] = new MyColor(1,1,1);
+
+        double[][] energy =  Energizer.energy(img);
+
+        double[][] dynamic = Energizer.createMap(energy);
+        return;
     }
 
-
-    }
 
 }
 

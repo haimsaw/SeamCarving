@@ -14,11 +14,11 @@ public class Services {
             BufferedImage bi = ImageIO.read(file);
             int h = bi.getHeight();
             int w = bi.getWidth();
-            MyColor[][] result = new MyColor[h][w];
+            MyColor[][] result = new MyColor[w][h];
 
 
-            for (int i=0; i<h; i++) {
-                for (int j=0; j<w; j++) {
+            for (int i=0; i<w; i++) {
+                for (int j=0; j<h; j++) {
                     int rgb = bi.getRGB(i, j);
                     double red = (rgb >> 16) & 0xFF;
                     double green = (rgb >> 8) & 0xFF;
