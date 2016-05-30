@@ -22,9 +22,9 @@ public class Services {
             for (int i=0; i<h; i++) {
                 for (int j=0; j<w; j++) {
                     int rgb = bi.getRGB(i,j);
-                    int red = (rgb >> 16) & 0xFF;
-                    int green = (rgb >> 8) & 0xFF;
-                    int blue = (rgb      ) & 0xFF;
+                    double red = (rgb >> 16) & 0xFF;
+                    double green = (rgb >> 8) & 0xFF;
+                    double blue = (rgb      ) & 0xFF;
                     result[i][j] = new MyColor(red, green, blue);
             }
 
