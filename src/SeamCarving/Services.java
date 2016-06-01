@@ -39,21 +39,53 @@ public class Services {
 
     }
 
-    public List<Seem> get_best_seem_list(int num_of_seems, float[][] dynamicMap){
+    public static List<Seem> get_best_seem_list(int num_of_seems, double[][] dynamicMap){
         List<Seem> seem_list = new LinkedList<>();
-        float[] seem_scors = Arrays.copyOf(dynamicMap[dynamicMap.length], dynamicMap[dynamicMap.length].length);
+        double[] seem_scors = Arrays.copyOf(dynamicMap[dynamicMap.length-1], dynamicMap[dynamicMap.length-1].length);
         Arrays.sort(seem_scors);
+        double max_seem_val = seem_scors[num_of_seems - 1];
+        //we need all the seems with val<=max_seem_val
 
-
-
-
-        for (;num_of_seems>0; num_of_seems--){
+        for (int j=0; j<dynamicMap.length; j++){
+            if (dynamicMap[dynamicMap.length -1][j]<=max_seem_val){
+                seem_list.add(get_seem_starting_at(j, dynamicMap));
+            }
+            if (seem_list.size() == num_of_seems){
+                break;
+            }
 
         }
 
 
         return seem_list;
     }
+
+    private static Seem get_seem_starting_at(int seem_location, double[][] dynamicMap) {
+        int height = dynamicMap[0].length;
+        int seem_as_arr[] = new int[height];
+        seem_as_arr[height-1] = seem_location;
+        for (int i = height-2; i>=0; i--){
+            int center = seem_as_arr[i+1];
+            double min = 1000000;
+            int min_loc = -1;
+            for (int width_diff = -1; width_diff<=2;width_diff++){
+                try {
+                    double min_cadidate = dynamicMap[i][center + width_diff];
+                    if (min_cadidate < min){
+                        min = min_cadidate;
+                        min_loc = center + width_diff;
+                    }
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    continue;
+                }
+
+            }
+            seem_as_arr[i] = min_loc;
+        }
+        return new Seem(seem_as_arr);
+    }
+
 
     public MyColor[][] removeSeam(MyColor[][] old, int[] seem) {
         MyColor[][] newMat = new MyColor[old.length][old[0].length];
@@ -70,7 +102,7 @@ public class Services {
                     }
                 }
             }
-            
+
         }
         return newMat;
     }

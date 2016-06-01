@@ -46,7 +46,7 @@ public class Energizer {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
 
-                double min = 100;//Double.MAX_VALUE;
+                double min = 1000000;//Double.MAX_VALUE;
                 for (int width_diff = -1; width_diff <= 1; width_diff++) {
                     try {
                         double neighborResult = result[i -1][j+width_diff];
@@ -57,7 +57,7 @@ public class Energizer {
                         continue;
                     }
                 }
-                if (min==100) { // Double.MAX_VALUE){
+                if (min==1000000) { // Double.MAX_VALUE){
                     min = 0;
                 }
                 result[i][j] = min + energy[i][j];

@@ -4,6 +4,8 @@ import java.awt.color.*;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 
 
 public class Carver {
@@ -30,6 +32,7 @@ public class Carver {
         double[][] energy =  Energizer.energy(img);
 
         double[][] dynamic = Energizer.createDynamicMap(energy);
+        List<Seem> seem = Services.get_best_seem_list(5, dynamic);
         return;
     }
 
