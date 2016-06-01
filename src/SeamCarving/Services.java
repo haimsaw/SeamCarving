@@ -87,11 +87,12 @@ public class Services {
     }
 
 
-    public MyColor[][] removeSeam(MyColor[][] old, int[] seem) {
+    public MyColor[][] removeSeam(MyColor[][] old, Seem seemObj) {
+        int[] seem = seemObj.seem_as_arr;
         MyColor[][] newMat = new MyColor[old.length][old[0].length];
         for (int i = 0; i < old.length; i++) {
             boolean isRowAfterRemoval = false;
-            for (int j = 0; j < old[0].length) {
+            for (int j = 0; j < old[0].length; j++) {
                 if (seem[i] == j) {
                     isRowAfterRemoval = true;
                 } else {
