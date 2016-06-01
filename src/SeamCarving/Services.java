@@ -3,6 +3,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Services {
 
@@ -35,7 +36,7 @@ public class Services {
 
     }
 
-    public Seem[] get_best_seem_list(int num_of_seems, float[] dynamicMap){
+    public List<Seem> get_best_seem_list(int num_of_seems, float[] dynamicMap){
         
     }
 }
