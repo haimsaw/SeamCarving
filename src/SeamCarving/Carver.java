@@ -19,20 +19,20 @@ public class Carver {
 
 
         MyColor[][] img = Services.getImage(input_image_filename);
+        /*
+        MyColor[][] img = new MyColor[5][5];
+        for (int i=0; i<5; i++) {
+            for (int j=0; j<5; j++) {
+                img[i][j] = new MyColor(0.5, 0.5, 0.5);
+            }
+        }
 
-//        MyColor[][] img = new MyColor[5][5];
-//        for (int i=0; i<5; i++) {
-//            for (int j=0; j<5; j++) {
-//                img[i][j] = new MyColor(0.5, 0.5, 0.5);
-//            }
-//        }
-
-//        img[2][2] = new MyColor(1,1,1);
+        img[2][2] = new MyColor(1,1,1);*/
 
         MyColor[][] result = img.clone();
 
-        for (int i = 0; i < 2; i++) {
-            double[][] energy = Energizer.energy(img);
+        for (int i = 0; i < 100; i++) {
+            double[][] energy = Energizer.energy0(result);
 
             double[][] dynamic = Energizer.createDynamicMap(energy);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);

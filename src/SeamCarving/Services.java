@@ -64,7 +64,7 @@ public class Services {
     }
 
     private static Seem get_seem_starting_at(int seem_location, double[][] dynamicMap) {
-        int height = dynamicMap[0].length;
+        int height = dynamicMap.length;
         int seem_as_arr[] = new int[height];
         seem_as_arr[height - 1] = seem_location;
         for (int i = height - 2; i >= 0; i--) {
