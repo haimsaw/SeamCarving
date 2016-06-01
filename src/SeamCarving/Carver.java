@@ -29,7 +29,7 @@ public class Carver {
 
         double[][] energy =  Energizer.energy(img);
 
-        double[][] dynamic = Energizer.createMap(energy);
+        double[][] dynamic = Energizer.createDynamicMap(energy);
         return;
     }
 

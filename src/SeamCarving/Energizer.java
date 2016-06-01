@@ -37,7 +37,7 @@ public class Energizer {
         return energyMap;
     }
 
-    public static double[][] createMap(double[][] energy) {
+    public static double[][] createDynamicMap(double[][] energy) {
 
         int width = energy.length;
         int height = energy[0].length;
@@ -68,3 +68,4 @@ public class Energizer {
     }
 
 }
+
