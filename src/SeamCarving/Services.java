@@ -96,7 +96,7 @@ public class Services {
                 if (seem[i] == j) {
                     isRowAfterRemoval = true;
                 } else {
-                    if (isRowAfterRemoval) {
+                    if (!isRowAfterRemoval) {
                         newMat[i][j] = old[i][j];
                     } else {
                         newMat[i][j - 1] = old[i][j];
