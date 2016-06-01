@@ -55,7 +55,23 @@ public class Services {
         return seem_list;
     }
 
-    public MyColor[][] removeSeam(MyColor[][] old, Seam seam) {
-
+    public MyColor[][] removeSeam(MyColor[][] old, int[] seem) {
+        MyColor[][] newMat = new MyColor[old.length][old[0].length];
+        for (int i = 0; i < old.length; i++) {
+            boolean isRowAfterRemoval = false;
+            for (int j = 0; j < old[0].length) {
+                if (seem[i] == j) {
+                    isRowAfterRemoval = true;
+                } else {
+                    if (isRowAfterRemoval) {
+                        newMat[i][j] = old[i][j];
+                    } else {
+                        newMat[i][j - 1] = old[i][j];
+                    }
+                }
+            }
+            
+        }
+        return newMat;
     }
 }
