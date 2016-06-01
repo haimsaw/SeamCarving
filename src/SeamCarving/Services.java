@@ -3,6 +3,10 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Services {
 
@@ -35,8 +39,20 @@ public class Services {
 
     }
 
-    public Seem[] get_best_seem_list(int num_of_seems, float[] dynamicMap){
-        
+    public List<Seem> get_best_seem_list(int num_of_seems, float[][] dynamicMap){
+        List<Seem> seem_list = new LinkedList<>();
+        float[] seem_scors = Arrays.copyOf(dynamicMap[dynamicMap.length], dynamicMap[dynamicMap.length].length);
+        Arrays.sort(seem_scors);
+
+
+
+
+        for (;num_of_seems>0; num_of_seems--){
+
+        }
+
+
+        return seem_list;
     }
 
     public MyColor[][] removeSeam(MyColor[][] old, Seam seam) {
