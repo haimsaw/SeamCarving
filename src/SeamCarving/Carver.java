@@ -1,9 +1,4 @@
 package SeamCarving;
-import javax.imageio.ImageIO;
-import java.awt.color.*;
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -29,7 +24,7 @@ public class Carver {
 
         img[2][2] = new MyColor(1,1,1);
 
-        double[][] energy =  Energizer.energy(img);
+        double[][] energy =  Energizer.energy0(img);
 
         double[][] dynamic = Energizer.createDynamicMap(energy);
         List<Seem> seems = Services.get_best_seem_list(1, dynamic);

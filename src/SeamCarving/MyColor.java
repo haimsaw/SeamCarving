@@ -20,4 +20,8 @@ public class MyColor {
     public String toString() {
         return String.format("%f, %f, %f", r, g, b);
     }
+
+    public double toGray(){
+        return (r+g+b)/3;
+    }
 }
