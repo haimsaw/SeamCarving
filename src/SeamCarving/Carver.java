@@ -31,13 +31,17 @@ public class Carver {
 
         MyColor[][] result = img.clone();
 
+        int h;
+        int w;
         for (int i = 0; i < 100; i++) {
-            double[][] energy = Energizer.energy0(result);
+            double[][] energy = Energizer.energy(result);
 
             double[][] dynamic = Energizer.createDynamicMap(energy);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
 
             result = Services.removeSeem(result, seems.get(0));
+            h = result.length;
+            w = result[0].length;
 
 
         }
