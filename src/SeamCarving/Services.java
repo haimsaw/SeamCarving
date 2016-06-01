@@ -38,4 +38,8 @@ public class Services {
     public Seem[] get_best_seem_list(int num_of_seems, float[] dynamicMap){
         
     }
+
+    public MyColor[][] removeSeam(MyColor[][] old, Seam seam) {
+
+    }
 }
