@@ -32,7 +32,10 @@ public class Carver {
         double[][] energy =  Energizer.energy(img);
 
         double[][] dynamic = Energizer.createDynamicMap(energy);
-        List<Seem> seem = Services.get_best_seem_list(5, dynamic);
+        List<Seem> seems = Services.get_best_seem_list(1, dynamic);
+
+        MyColor[][] result = Services.removeSeem(img, seems.get(0));
+
         return;
     }
 
