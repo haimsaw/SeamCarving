@@ -4,8 +4,8 @@ package SeamCarving;
 public class Energizer {
 
     public static double[][] energy(MyColor[][] image){
-        int width = image.length;
-        int height = image[0].length;
+        int width = image[0].length;
+        int height = image.length;
         double[][] energyMap = new double[height][width];
 
         for (int i=0;i<height;i++){
@@ -39,8 +39,9 @@ public class Energizer {
 
     public static double[][] createDynamicMap(double[][] energy) {
 
-        int width = energy.length;
-        int height = energy[0].length;
+
+        int height = energy.length;
+        int width = energy[0].length;
         double[][] result = new double[height][width];
 
         for (int i = 0; i < height; i++) {

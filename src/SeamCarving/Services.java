@@ -64,7 +64,7 @@ public class Services {
     }
 
     private static Seem get_seem_starting_at(int seem_location, double[][] dynamicMap) {
-        int height = dynamicMap[0].length;
+        int height = dynamicMap.length;
         int seem_as_arr[] = new int[height];
         seem_as_arr[height - 1] = seem_location;
         for (int i = height - 2; i >= 0; i--) {
@@ -91,7 +91,12 @@ public class Services {
 
     public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj) {
         int[] seem = seemObj.seem_as_arr;
-        MyColor[][] newMat = new MyColor[old.length][old[0].length - 1];
+        int oldH = old.length;
+        int oldW = old[0].length;
+
+        int h = old.length;
+        int w = old[0].length - 1;
+        MyColor[][] newMat = new MyColor[h][w];
         for (int i = 0; i < old.length; i++) {
             boolean isRowAfterRemoval = false;
             for (int j = 0; j < old[0].length; j++) {
@@ -107,6 +112,8 @@ public class Services {
             }
 
         }
+        int newH = newMat.length;
+        int newW = newMat[0].length;
         return newMat;
     }
 
@@ -129,7 +136,7 @@ public class Services {
 
         File f = new File(path);
         try {
-            ImageIO.write(img, "PNG", f);
+            ImageIO.write(img, "JPEG", f);
         } catch (IOException e) {
             e.printStackTrace();
         }
