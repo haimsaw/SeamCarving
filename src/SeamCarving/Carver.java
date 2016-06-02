@@ -33,7 +33,7 @@ public class Carver {
 
         int h;
         int w;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             double[][] energy = Energizer.energy(result);
 
             double[][] dynamic = Energizer.createDynamicMap(energy);

@@ -42,9 +42,31 @@ public class Energizer {
         int height = image.length;
         double[][] energyMap = new double[height][width];
 
-        double[][] energy0 = energy0(image);
+        double[][] energy0 = energy(image);
         double[][] ro_ln_ro = roLnRo(gray_scale_image(image));
 
+
+        for (int i=0;i<height;i++) {
+            for (int j = 0; j < width; j++) {
+                int num_of_nebors = 0;
+                double neibors_ro_ln_ro = 0;
+
+                for (int height_diff = -4; height_diff <= 4; height_diff++) {
+                    for (int width_diff = -4; width_diff <= 4; width_diff++) {
+                        try{
+                            double neibor_ro_ln_ro = ro_ln_ro[i+height_diff][j+width_diff];
+                            neibors_ro_ln_ro += neibor_ro_ln_ro;
+                            num_of_nebors ++;
+                        }
+                        catch (ArrayIndexOutOfBoundsException e){
+                            continue;
+                        }
+
+                    }
+                }
+                energyMap[i][j] = -1*0.5*neibors_ro_ln_ro/num_of_nebors+ 0.5*energy0[i][j];
+            }
+        }
 
         return energyMap;
     }
