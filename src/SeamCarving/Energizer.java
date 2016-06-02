@@ -1,6 +1,8 @@
 package SeamCarving;
 
 
+import java.util.InputMismatchException;
+
 public class Energizer {
 
     public static double[][] energy0(MyColor[][] image){
@@ -67,6 +69,7 @@ public class Energizer {
                     }
                 }
                 energyMap[i][j] = -1*0.5*neibors_ro_ln_ro/num_of_nebors+ 0.5*energy0[i][j];
+
             }
         }
 
@@ -95,6 +98,9 @@ public class Energizer {
                 }
                 double ro = grays[i][j]/sum_of_grays; //todo- need to normalize by num of neibors?
                 ro_ln_ro[i][j] = ro*Math.log(ro);
+                if (ro == 0.0 ){
+                    ro_ln_ro[i][j] = Double.MIN_VALUE;
+                }
             }
 
         }
@@ -145,5 +151,17 @@ public class Energizer {
         return result;
     }
 
+    public static double[][] energy(MyColor[][] img, int energy_type) throws InputMismatchException {
+        switch (energy_type){
+            case (0):
+                return energy0(img);
+            case (1):
+                return energy1(img);
+            /*case (2):
+                return energy2(img);*/
+            default:
+                throw new InputMismatchException("no energy type");
+        }
+    }
 }
 

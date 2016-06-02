@@ -13,32 +13,27 @@ import java.util.List;
 
 public class Services {
 
-    public static MyColor[][] getImage(String path) {
-
-        try {
-
-            File file = new File(path);
-            BufferedImage bi = ImageIO.read(file);
-            int h = bi.getHeight();
-            int w = bi.getWidth();
-            MyColor[][] result = new MyColor[w][h];
+    public static MyColor[][] getImage(String path) throws IOException {
 
 
-            for (int i = 0; i < w; i++) {
-                for (int j = 0; j < h; j++) {
-                    int rgb = bi.getRGB(i, j);
-                    double red = (rgb >> 16) & 0xFF;
-                    double green = (rgb >> 8) & 0xFF;
-                    double blue = (rgb) & 0xFF;
-                    result[i][j] = new MyColor(red, green, blue);
-                }
+        File file = new File(path);
+        BufferedImage bi = ImageIO.read(file);
+        int h = bi.getHeight();
+        int w = bi.getWidth();
+        MyColor[][] result = new MyColor[w][h];
+
+
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int rgb = bi.getRGB(i, j);
+                double red = (rgb >> 16) & 0xFF;
+                double green = (rgb >> 8) & 0xFF;
+                double blue = (rgb) & 0xFF;
+                result[i][j] = new MyColor(red, green, blue);
             }
-
-            return result;
-        } catch (Exception e) {
-            System.out.println("ERROR");
-            return null;
         }
+
+        return Services.transpose(result);
 
     }
 
@@ -59,8 +54,9 @@ public class Services {
         double max_seem_val = seem_scors[num_of_seems - 1];
         //we need all the seems with val<=max_seem_val
 
-        for (int j = 0; j < dynamicMap.length; j++) {
-            if (dynamicMap[dynamicMap.length - 1][j] <= max_seem_val) {
+        for (int j = 0; j < dynamicMap[0].length; j++) {
+            double epsilon = 0.0001;
+            if (dynamicMap[dynamicMap.length - 1][j] <= max_seem_val+epsilon) {
                 seem_list.add(get_seem_starting_at(j, dynamicMap));
             }
             if (seem_list.size() == num_of_seems) {
@@ -79,7 +75,7 @@ public class Services {
         seem_as_arr[height - 1] = seem_location;
         for (int i = height - 2; i >= 0; i--) {
             int center = seem_as_arr[i + 1];
-            double min = 1000000;
+            double min = Double.MAX_VALUE;
             int min_loc = -1;
             for (int width_diff = -1; width_diff <= 2; width_diff++) {
                 try {
@@ -131,7 +127,7 @@ public class Services {
 //        File file = new File(path);
 //        BufferedImage bi = ImageIO.read(pa);
 
-
+        m = Services.transpose(m);
         BufferedImage img = new BufferedImage(m.length, m[0].length,
                 BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < m.length; i++) {
