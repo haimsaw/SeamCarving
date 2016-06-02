@@ -18,22 +18,27 @@ public class Carver {
         String output_image_filename = args[4];
 
 
+        MyColor[][] img = Services.getImage(input_image_filename);
+        /*
+        MyColor[][] img = new MyColor[5][5];
+        for (int i=0; i<5; i++) {
+            for (int j=0; j<5; j++) {
+                img[i][j] = new MyColor(0.5, 0.5, 0.5);
+            }
+        }
         MyColor[][] img = Services.transpose(Services.getImage(input_image_filename));
 
-//        MyColor[][] img = new MyColor[5][5];
-//        for (int i=0; i<5; i++) {
-//            for (int j=0; j<5; j++) {
-//                img[i][j] = new MyColor(0.5, 0.5, 0.5);
-//            }
-//        }
-
-//        img[2][2] = new MyColor(1,1,1);
+        img[2][2] = new MyColor(1,1,1);*/
 
         MyColor[][] result = img.clone();
 
 
         int h;
         int w;
+        long start = System.nanoTime();
+        for (int i = 0; i < 100; i++) {
+            System.out.println(i);
+            double[][] energy = Energizer.energy1(result);
 
         h = result.length;
         w = result[0].length;
@@ -50,7 +55,9 @@ public class Carver {
 
 
         }
-
+        long a = 1000000000;
+        a *= 60;
+        System.out.println((System.nanoTime()-start)/a);
 
         Services.saveImage(result, output_image_filename);
 
