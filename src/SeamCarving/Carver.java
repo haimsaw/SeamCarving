@@ -18,7 +18,7 @@ public class Carver {
         String output_image_filename = args[4];
 
 
-        MyColor[][] img = Services.getImage(input_image_filename);
+        MyColor[][] img = Services.transpose(Services.getImage(input_image_filename));
 
 //        MyColor[][] img = new MyColor[5][5];
 //        for (int i=0; i<5; i++) {
@@ -31,9 +31,14 @@ public class Carver {
 
         MyColor[][] result = img.clone();
 
+
         int h;
         int w;
-        for (int i = 0; i < 100; i++) {
+
+        h = result.length;
+        w = result[0].length;
+
+        for (int i = 0; i < 300; i++) {
             double[][] energy = Energizer.energy(result);
 
             double[][] dynamic = Energizer.createDynamicMap(energy);

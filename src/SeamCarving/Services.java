@@ -42,6 +42,16 @@ public class Services {
 
     }
 
+
+    public static MyColor[][] transpose(MyColor [][] m){
+        MyColor[][] temp = new MyColor[m[0].length][m.length];
+        for (int i = 0; i < m.length; i++)
+            for (int j = 0; j < m[0].length; j++)
+                temp[j][i] = m[i][j];
+        return temp;
+    }
+
+
     public static List<Seem> get_best_seem_list(int num_of_seems, double[][] dynamicMap) {
         List<Seem> seem_list = new LinkedList<>();
         double[] seem_scors = Arrays.copyOf(dynamicMap[dynamicMap.length - 1], dynamicMap[dynamicMap.length - 1].length);
