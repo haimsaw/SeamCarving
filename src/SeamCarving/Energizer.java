@@ -3,7 +3,8 @@ package SeamCarving;
 
 public class Energizer {
 
-    public static double[][] energy(MyColor[][] image){
+    public static double[][] energy0(MyColor[][] image){
+        // not entropy
         int width = image[0].length;
         int height = image.length;
         double[][] energyMap = new double[height][width];
@@ -38,11 +39,12 @@ public class Energizer {
     }
 
     public static double[][] energy1(MyColor[][] image){
+        //0+ entropy
         int width = image[0].length;
         int height = image.length;
         double[][] energyMap = new double[height][width];
 
-        double[][] energy0 = energy(image);
+        double[][] energy0 = energy0(image);
         double[][] ro_ln_ro = roLnRo(gray_scale_image(image));
 
 

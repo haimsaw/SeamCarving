@@ -33,8 +33,10 @@ public class Carver {
 
         int h;
         int w;
-        for (int i = 0; i < 50; i++) {
-            double[][] energy = Energizer.energy(result);
+        long start = System.nanoTime();
+        for (int i = 0; i < 100; i++) {
+            System.out.println(i);
+            double[][] energy = Energizer.energy1(result);
 
             double[][] dynamic = Energizer.createDynamicMap(energy);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
@@ -45,7 +47,9 @@ public class Carver {
 
 
         }
-
+        long a = 1000000000;
+        a *= 60;
+        System.out.println((System.nanoTime()-start)/a);
 
         Services.saveImage(result, output_image_filename);
 
