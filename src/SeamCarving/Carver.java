@@ -46,7 +46,8 @@ public class Carver {
 
         long a = 1000000000;
         a *= 60;
-        //System.out.println((System.nanoTime()-start)/a);
+        System.out.print("time: ");
+        System.out.println((System.nanoTime()-start)/a);
 
         Services.saveImage(img, output_image_filename);
 
@@ -60,8 +61,7 @@ public class Carver {
             int height = img.length;
 
             System.out.println(i); // todo- delete
-            double[][] energy = Energizer.energy(img, energy_type);
-            double[][] dynamic = Energizer.createDynamicMap(energy);
+            double[][] dynamic = Energizer.energy(img, energy_type);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
 
             img = Services.removeSeem(img, seems.get(0));

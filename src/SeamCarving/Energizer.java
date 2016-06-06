@@ -98,8 +98,11 @@ public class Energizer {
                 }
                 double ro = grays[i][j]/sum_of_grays; //todo- need to normalize by num of neibors?
                 ro_ln_ro[i][j] = ro*Math.log(ro);
-                if (ro == 0.0 ){
+                if (grays[i][j] == 0.0 ){
                     ro_ln_ro[i][j] = Double.MIN_VALUE;
+                }
+                else if (sum_of_grays == 0){
+                    ro_ln_ro[i][j] = Double.MAX_VALUE;
                 }
             }
 
@@ -154,14 +157,71 @@ public class Energizer {
     public static double[][] energy(MyColor[][] img, int energy_type) throws InputMismatchException {
         switch (energy_type){
             case (0):
-                return energy0(img);
+                return createDynamicMap(energy0(img));
             case (1):
-                return energy1(img);
-            /*case (2):
-                return energy2(img);*/
+                return createDynamicMap(energy1(img));
+            case (2):
+                return createDynamicMap2(energy2(img));
             default:
                 throw new InputMismatchException("no energy type");
         }
+    }
+
+    public static double[][][] energy2(MyColor[][] image) {
+        //0+ entropy
+        int width = image[0].length;
+        int height = image.length;
+
+        double[][][] cl_cu_cr = new double[height][width][3];
+
+
+        double[][] grays = gray_scale_image(image);
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                // todo- borders
+                for (int width_diff = -1; width_diff<=1; width_diff++) {
+                    cl_cu_cr[i][j][width_diff+1] = Math.abs(grays[i][j + 1] - grays[i][j - 1]) + Math.abs(grays[i - 1][j] - grays[i][j +width_diff]);
+                }
+            }
+        }
+        return cl_cu_cr;
+    }
+
+
+    public static double[][] createDynamicMap2(double[][][] cl_cu_cr){
+        int width = cl_cu_cr[0][0].length;
+        int height = cl_cu_cr[0].length;
+        double[][] result = new double[height][width];
+
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+
+                double min = Double.MAX_VALUE;
+                double val;
+
+                for (int width_diff = -1; width_diff<=1; width_diff++){
+                    try {
+                        val = result[i][j + width_diff] + cl_cu_cr[i][j][width_diff + 1];
+                        if (val < min) {
+                            min = val;
+                        }
+                    }
+                    catch (ArrayIndexOutOfBoundsException e){
+                        continue;
+                    }
+                }
+                if (min > Double.MAX_VALUE - 0.00001){
+                    //todo - borders
+                }
+                result[i][j] = min;
+
+            }
+
+        }
+        return result;
+
     }
 }
 
