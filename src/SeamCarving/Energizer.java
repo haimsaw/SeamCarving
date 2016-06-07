@@ -167,8 +167,10 @@ public class Energizer {
         }
     }
 
+
+
     public static double[][][] energy2(MyColor[][] image) {
-        //0+ entropy
+        //Forward Energy
         int width = image[0].length;
         int height = image.length;
 
@@ -180,18 +182,27 @@ public class Energizer {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 // todo- borders
+                int up = i==0 ? 0 : i-1; //i-1
+                int right = j == width-1 ? j : j+1; //j+1
+                int left = j==0 ? 0 : j-1;//j-1
+
                 for (int width_diff = -1; width_diff<=1; width_diff++) {
-                    cl_cu_cr[i][j][width_diff+1] = Math.abs(grays[i][j + 1] - grays[i][j - 1]) + Math.abs(grays[i - 1][j] - grays[i][j +width_diff]);
+                    try {
+
+                        cl_cu_cr[i][j][width_diff+1] = Math.abs(grays[i][right] - grays[i][left]) + Math.abs(grays[up][j] - grays[i][j +width_diff]);
+                    }
+                    catch (ArrayIndexOutOfBoundsException e){
+                        cl_cu_cr[i][j][width_diff+1] = Math.abs(grays[i][right] - grays[i][left]) + Math.abs(grays[up][j] - grays[i][j]);
+                    }
                 }
             }
         }
         return cl_cu_cr;
     }
 
-
     public static double[][] createDynamicMap2(double[][][] cl_cu_cr){
-        int width = cl_cu_cr[0][0].length;
-        int height = cl_cu_cr[0].length;
+        int width = cl_cu_cr[0].length;
+        int height = cl_cu_cr.length;
         double[][] result = new double[height][width];
 
 
@@ -213,7 +224,7 @@ public class Energizer {
                     }
                 }
                 if (min > Double.MAX_VALUE - 0.00001){
-                    //todo - borders
+                    min = (cl_cu_cr[i][j][0] +cl_cu_cr[i][j][1]+cl_cu_cr[i][j][2]) /3;
                 }
                 result[i][j] = min;
 
