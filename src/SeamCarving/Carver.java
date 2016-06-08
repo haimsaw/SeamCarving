@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Carver {
 
-    public static void main(String [] args) {
+    public static void main(String [] args) throws IOException {
         String input_image_filename = args[0];
         int num_of_colums = Integer.parseInt(args[1]);
         int num_of_rows = Integer.parseInt(args[2]);
@@ -18,53 +18,57 @@ public class Carver {
         String output_image_filename = args[4];
 
 
-        MyColor[][] img = Services.getImage(input_image_filename);
+        /*MyColor[][] img = Services.getImage(input_image_filename);
 
-        /*
         MyColor[][] img = new MyColor[5][5];
         for (int i=0; i<5; i++) {
             for (int j=0; j<5; j++) {
                 img[i][j] = new MyColor(0.5, 0.5, 0.5);
             }
         }
-        MyColor[][] img = Services.transpose(Services.getImage(input_image_filename));
-
-        img[2][2] = new MyColor(1,1,1);*/
-
+        img[0][1] = new MyColor(1,1,1);
+        img = Services.transpose(img);*/
 
 
-        MyColor[][] result = img.clone();
+        //MyColor[][] img = Services.transpose(Services.getImage(input_image_filename));
+        MyColor[][] img = Services.getImage(input_image_filename);
 
-
-        int h;
-        int w;
         long start = System.nanoTime();
-//        for (int i = 0; i < 100; i++) {
-//            System.out.println(i);
-//            double[][] energy = Energizer.energy1(result);
 
-        h = result.length;
-        w = result[0].length;
+        int width = img[0].length;
+        int height = img.length;
 
-        for (int i = 0; i < 300; i++) {
-            double[][] energy = Energizer.energy0(result);
+        img = remove_seams(img, width-num_of_colums, energy_type);
+        img = Services.transpose(img);
+        img = remove_seams(img, height-num_of_rows, energy_type);
+        img = Services.transpose(img);
 
-            double[][] dynamic = Energizer.createDynamicMap(energy);
+
+        long a = 1000000000;
+        a *= 60;
+        System.out.print("time: ");
+        System.out.println((System.nanoTime()-start)/a);
+
+        Services.saveImage(img, output_image_filename);
+
+        return;
+    }
+
+    private static MyColor[][] remove_seams(MyColor[][] img, int num_of_seams_ro_remove, int energy_type) {
+        for (int i = 0; i <num_of_seams_ro_remove ; i++) {
+
+            int width = img[0].length;
+            int height = img.length;
+
+            System.out.println(i); // todo- delete
+            double[][] dynamic = Energizer.energy(img, energy_type);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
 
-            result = Services.removeSeem(result, seems.get(0));
-            h = result.length;
-            w = result[0].length;
+            img = Services.removeSeem(img, seems.get(0));
 
 
         }
-        long a = 1000000000;
-        a *= 60;
-        System.out.println((System.nanoTime()-start)/a);
-
-        Services.saveImage(result, output_image_filename);
-
-        return;
+        return img;
     }
 
 
