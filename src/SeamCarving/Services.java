@@ -95,10 +95,9 @@ public class Services {
     }
 
 
-    public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj) {
+    public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj, MyColor[][] removedPixels, int seemNumber, boolean toAdd) {
         int[] seem = seemObj.seem_as_arr;
-        int oldH = old.length;
-        int oldW = old[0].length;
+
 
         int h = old.length;
         int w = old[0].length - 1;
@@ -108,6 +107,10 @@ public class Services {
             for (int j = 0; j < old[0].length; j++) {
                 if (seem[i] == j) {
                     isRowAfterRemoval = true;
+                    if (toAdd) {
+                        MyColor o = old[i][j];
+                        removedPixels[i][seemNumber+j] = new MyColor(o.r, o.g, o.b);
+                    }
                 } else {
                     if (!isRowAfterRemoval) {
                         newMat[i][j] = old[i][j];
@@ -118,10 +121,22 @@ public class Services {
             }
 
         }
-        int newH = newMat.length;
-        int newW = newMat[0].length;
         return newMat;
     }
+
+
+    public static MyColor[][] copyImage(MyColor[][] img) {
+        MyColor[][] result = new MyColor[img.length][img[0].length];
+        for (int i=0; i<img.length; i++) {
+            for (int j=0; j<img[0].length; j++) {
+                MyColor c = img[i][j];
+                MyColor newColor = new MyColor(c.r, c.g, c.b);
+                result[i][j] = newColor;
+            }
+        }
+        return result;
+    }
+
 
     public static void saveImage(MyColor[][] m, String path) {
 //        File file = new File(path);
