@@ -95,7 +95,7 @@ public class Services {
     }
 
 
-    public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj, MyColor[][] removedPixels, int seemNumber, boolean toAdd) {
+    public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj, int[][] removedPixels, int seemNumber, boolean toAdd) {
         int[] seem = seemObj.seem_as_arr;
 
 
@@ -108,8 +108,7 @@ public class Services {
                 if (seem[i] == j) {
                     isRowAfterRemoval = true;
                     if (toAdd) {
-                        MyColor o = old[i][j];
-                        removedPixels[i][seemNumber+j] = new MyColor(o.r, o.g, o.b);
+                        removedPixels[i][seemNumber+j] = 1;
                     }
                 } else {
                     if (!isRowAfterRemoval) {

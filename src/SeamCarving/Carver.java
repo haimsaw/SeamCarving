@@ -69,7 +69,7 @@ public class Carver {
     private static MyColor[][] remove_seams(MyColor[][] img, int num_of_seams_ro_remove, int energy_type) {
         int width = img[0].length;
         int height = img.length;
-        MyColor[][] pixelsToAdd = new MyColor[height][width];
+        int[][] pixelsToAdd = null;
 
         for (int i = 0; i <num_of_seams_ro_remove ; i++) {
 
@@ -88,7 +88,7 @@ public class Carver {
 
         int width = img[0].length;
         int height = img.length;
-        MyColor[][] pixelsToAdd = new MyColor[height][width];
+        int[][] pixelsToAdd = new int[height][width];
 
         MyColor[][] imgCopy = Services.copyImage(img);
 
@@ -98,17 +98,26 @@ public class Carver {
             img = Services.removeSeem(img, seems.get(0), pixelsToAdd, i, true);
         }
 
+
+        int sum = 0;
+        int m;
+        for (m = 0; m< pixelsToAdd[0].length; m++) {
+            sum += pixelsToAdd[0][m];
+        }
+        System.out.println(sum);
+
         MyColor[][] newImg = addAndMultiplyPixels(imgCopy, pixelsToAdd, num_of_seams_to_add);
+
         return newImg;
     }
 
-    private static MyColor[][] addAndMultiplyPixels(MyColor[][] img, MyColor[][] pixelsToAdd, int numOfSeems) {
+    private static MyColor[][] addAndMultiplyPixels(MyColor[][] img, int[][] pixelsToAdd, int numOfSeems) {
         MyColor[][] newImg = new MyColor[img.length][img[0].length+numOfSeems];
 
         for (int i=0; i<img.length; i++) {
             int numOfAlreadyAdded = 0;
             for (int j=0; j<img[0].length; j++) {
-                if (pixelsToAdd[i][j] != null) {
+                if (pixelsToAdd[i][j] == 1) {
                     MyColor c = img[i][j];
                     newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
                     newImg[i][j+numOfAlreadyAdded+1] = new MyColor(c.r, c.g, c.b);
@@ -118,9 +127,9 @@ public class Carver {
                     newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
                 }
             }
-            if (numOfAlreadyAdded != numOfSeems) {
-                System.out.println("Problem");
-            }
+//            if (numOfAlreadyAdded != numOfSeems) {
+//                System.out.println("Problem");
+//            }
         }
         return newImg;
 
