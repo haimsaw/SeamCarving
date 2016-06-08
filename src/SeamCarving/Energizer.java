@@ -23,7 +23,7 @@ public class Energizer {
                             energy += image[i+height_diff][j+width_diff].norma1(image[i][j]);
                             num_of_nebors ++;
                         }
-                        catch (ArrayIndexOutOfBoundsException e){
+                        catch (Exception e){
                             continue;
                         }
 

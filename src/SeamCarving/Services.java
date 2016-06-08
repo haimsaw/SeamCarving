@@ -34,9 +34,12 @@ public class Services {
                 }
             }
 
-            return result;
+            MyColor[][] transpose = transpose(result);
+            return transpose;
+//            return result;
+
         } catch (Exception e) {
-            System.out.println("ERROR");
+            System.out.println(e.getMessage());
             return null;
         }
 
@@ -46,8 +49,10 @@ public class Services {
     public static MyColor[][] transpose(MyColor [][] m){
         MyColor[][] temp = new MyColor[m[0].length][m.length];
         for (int i = 0; i < m.length; i++)
-            for (int j = 0; j < m[0].length; j++)
-                temp[j][i] = m[i][j];
+            for (int j = 0; j < m[0].length; j++) {
+                MyColor p = (MyColor) m[i][j];
+                temp[j][i] = new MyColor(p.r, p.g, p.b);
+            }
         return temp;
     }
 
@@ -68,8 +73,6 @@ public class Services {
             }
 
         }
-
-
         return seem_list;
     }
 

@@ -19,6 +19,7 @@ public class Carver {
 
 
         MyColor[][] img = Services.getImage(input_image_filename);
+
         /*
         MyColor[][] img = new MyColor[5][5];
         for (int i=0; i<5; i++) {
@@ -30,21 +31,23 @@ public class Carver {
 
         img[2][2] = new MyColor(1,1,1);*/
 
+
+
         MyColor[][] result = img.clone();
 
 
         int h;
         int w;
         long start = System.nanoTime();
-        for (int i = 0; i < 100; i++) {
-            System.out.println(i);
-            double[][] energy = Energizer.energy1(result);
+//        for (int i = 0; i < 100; i++) {
+//            System.out.println(i);
+//            double[][] energy = Energizer.energy1(result);
 
         h = result.length;
         w = result[0].length;
 
         for (int i = 0; i < 300; i++) {
-            double[][] energy = Energizer.energy(result);
+            double[][] energy = Energizer.energy0(result);
 
             double[][] dynamic = Energizer.createDynamicMap(energy);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
