@@ -95,7 +95,7 @@ public class Services {
     }
 
 
-    public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj, int[][] removedPixels, int seemNumber, boolean toAdd) {
+    public static MyColor[][] removeSeem(MyColor[][] old, Seem seemObj) {
         int[] seem = seemObj.seem_as_arr;
 
 
@@ -107,14 +107,38 @@ public class Services {
             for (int j = 0; j < old[0].length; j++) {
                 if (seem[i] == j) {
                     isRowAfterRemoval = true;
-                    if (toAdd) {
-                        removedPixels[i][seemNumber+j] = 1;
-                    }
                 } else {
                     if (!isRowAfterRemoval) {
                         newMat[i][j] = old[i][j];
                     } else {
                         newMat[i][j - 1] = old[i][j];
+                    }
+                }
+            }
+
+        }
+        return newMat;
+    }
+
+    public static int[][][] removeSeemFromPointersMatrix(int[][][] old, Seem seemObj) {
+        int[] seem = seemObj.seem_as_arr;
+
+
+        int h = old.length;
+        int w = old[0].length - 1;
+        int[][][] newMat = new int[h][w][2];
+        for (int i = 0; i < old.length; i++) {
+            boolean isRowAfterRemoval = false;
+            for (int j = 0; j < old[0].length; j++) {
+                if (seem[i] == j) {
+                    isRowAfterRemoval = true;
+                } else {
+                    if (!isRowAfterRemoval) {
+                        newMat[i][j][0] = old[i][j][0];
+                        newMat[i][j][1] = old[i][j][1];
+                    } else {
+                        newMat[i][j - 1][0] = old[i][j][0];
+                        newMat[i][j - 1][1] = old[i][j][1];
                     }
                 }
             }

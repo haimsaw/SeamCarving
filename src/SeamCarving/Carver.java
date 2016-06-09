@@ -69,7 +69,6 @@ public class Carver {
     private static MyColor[][] remove_seams(MyColor[][] img, int num_of_seams_ro_remove, int energy_type) {
         int width = img[0].length;
         int height = img.length;
-        int[][] pixelsToAdd = null;
 
         for (int i = 0; i <num_of_seams_ro_remove ; i++) {
 
@@ -77,7 +76,7 @@ public class Carver {
             double[][] dynamic = Energizer.energy(img, energy_type);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
 
-            img = Services.removeSeem(img, seems.get(0), pixelsToAdd, i, false);
+            img = Services.removeSeem(img, seems.get(0));
 
 
         }
@@ -88,52 +87,88 @@ public class Carver {
 
         int width = img[0].length;
         int height = img.length;
-        int[][] pixelsToAdd = new int[height][width];
+
+        int[][][] pointersMatrix = new int[height][width][2];
+        for (int i=0; i<pointersMatrix.length; i++ ) {
+            for (int j=0; j< pointersMatrix[0].length; j++) {
+                pointersMatrix[i][j][0] = i;
+                pointersMatrix[i][j][1] = j;
+            }
+        }
 
         MyColor[][] imgCopy = Services.copyImage(img);
 
         for (int i = 0; i <num_of_seams_to_add ; i++) {
             double[][] dynamic = Energizer.energy(img, energy_type);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
-            img = Services.removeSeem(img, seems.get(0), pixelsToAdd, i, true);
+            img = Services.removeSeem(img, seems.get(0));
+            pointersMatrix = Services.removeSeemFromPointersMatrix(pointersMatrix, seems.get(0));
         }
 
 
-        int sum = 0;
-        int m;
-        for (m = 0; m< pixelsToAdd[0].length; m++) {
-            sum += pixelsToAdd[0][m];
-        }
-        System.out.println(sum);
+//        int sum = 0;
+//        int m;
+//        for (m = 0; m< pixelsToAdd[0].length; m++) {
+//            sum += pixelsToAdd[0][m];
+//        }
+//        System.out.println(sum);
 
-        MyColor[][] newImg = addAndMultiplyPixels(imgCopy, pixelsToAdd, num_of_seams_to_add);
+        MyColor[][] newImg = addAndMultiplyPixels(imgCopy, pointersMatrix);
 
         return newImg;
     }
 
-    private static MyColor[][] addAndMultiplyPixels(MyColor[][] img, int[][] pixelsToAdd, int numOfSeems) {
-        MyColor[][] newImg = new MyColor[img.length][img[0].length+numOfSeems];
+    private static MyColor[][] addAndMultiplyPixels(MyColor[][] img, int[][][] pointersMatrix) {
+        int numOfSeems = img[0].length - pointersMatrix[0].length;
+        MyColor[][] bigger = new MyColor[img.length][img[0].length + numOfSeems];
 
-        for (int i=0; i<img.length; i++) {
-            int numOfAlreadyAdded = 0;
-            for (int j=0; j<img[0].length; j++) {
-                if (pixelsToAdd[i][j] == 1) {
+        for (int i = 0; i < img.length; i++) {
+            int alreadyAdded = 0;
+            for (int j = 0; j < img[0].length; j++) {
+                boolean seemWasRemoved = true;
+                for (int w = 0; w < pointersMatrix[0].length; w++) {
+                    if (pointersMatrix[i][w][0] == i && pointersMatrix[i][w][1] == j) { //no need to multiply
+                        seemWasRemoved = false;
+                    }
+                }
+                if (!seemWasRemoved) {
                     MyColor c = img[i][j];
-                    newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
-                    newImg[i][j+numOfAlreadyAdded+1] = new MyColor(c.r, c.g, c.b);
-                    numOfAlreadyAdded += 1;
+                    bigger[i][j + alreadyAdded] = new MyColor(c.r, c.g, c.b);
                 } else {
                     MyColor c = img[i][j];
-                    newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
+                    bigger[i][j + alreadyAdded] = new MyColor(c.r, c.g, c.b);
+                    bigger[i][j + alreadyAdded + 1] = new MyColor(c.r, c.g, c.b);
+                    alreadyAdded += 1;
                 }
+
             }
+        }
+        return bigger;
+    }
+
+
+
+
+
+//        for (int i=0; i<img.length; i++) {
+//            int numOfAlreadyAdded = 0;
+//            for (int j=0; j<img[0].length; j++) {
+//                if (pixelsToAdd[i][j] == 1) {
+//                    MyColor c = img[i][j];
+//                    newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
+//                    newImg[i][j+numOfAlreadyAdded+1] = new MyColor(c.r, c.g, c.b);
+//                    numOfAlreadyAdded += 1;
+//                } else {
+//                    MyColor c = img[i][j];
+//                    newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
+//                }
+//            }
 //            if (numOfAlreadyAdded != numOfSeems) {
 //                System.out.println("Problem");
-//            }
-        }
-        return newImg;
-
-    }
+////            }
+//        }
+//        return newImg;
+//    }
 
 }
 
