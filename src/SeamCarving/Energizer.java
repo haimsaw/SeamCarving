@@ -181,7 +181,6 @@ public class Energizer {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                // todo- borders
                 int up = i==0 ? 0 : i-1; //i-1
                 int right = j == width-1 ? j : j+1; //j+1
                 int left = j==0 ? 0 : j-1;//j-1
@@ -221,7 +220,7 @@ public class Energizer {
                     }
                 }
                 if (min == Double.MAX_VALUE){
-                    min = 0;
+                    min = Math.min(cl_cu_cr[i][j][0],cl_cu_cr[i][j][2]);
                 }
                 result[i][j] = min;
 
