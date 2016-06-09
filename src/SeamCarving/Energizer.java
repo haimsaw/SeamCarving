@@ -181,20 +181,16 @@ public class Energizer {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                // todo- borders
                 int up = i==0 ? 0 : i-1; //i-1
                 int right = j == width-1 ? j : j+1; //j+1
                 int left = j==0 ? 0 : j-1;//j-1
 
-                for (int width_diff = -1; width_diff<=1; width_diff++) {
-                    try {
 
-                        cl_cu_cr[i][j][width_diff+1] = Math.abs(grays[i][right] - grays[i][left]) + Math.abs(grays[up][j] - grays[i][j +width_diff]);
-                    }
-                    catch (ArrayIndexOutOfBoundsException e){
-                        cl_cu_cr[i][j][width_diff+1] = Math.abs(grays[i][right] - grays[i][left]) + Math.abs(grays[up][j] - grays[i][j]);
-                    }
-                }
+
+                cl_cu_cr[i][j][0] = Math.abs(grays[i][right] - grays[i][left]) + Math.abs(grays[up][j] - grays[i][left]);
+                cl_cu_cr[i][j][1] = Math.abs(grays[i][right] - grays[i][left]);
+                cl_cu_cr[i][j][2] = Math.abs(grays[i][right] - grays[i][left]) + Math.abs(grays[up][j] - grays[i][right]);
+
             }
         }
         return cl_cu_cr;
@@ -214,7 +210,7 @@ public class Energizer {
 
                 for (int width_diff = -1; width_diff<=1; width_diff++){
                     try {
-                        val = result[i][j + width_diff] + cl_cu_cr[i][j][width_diff + 1];
+                        val = result[i-1][j + width_diff] + cl_cu_cr[i][j][width_diff + 1];
                         if (val < min) {
                             min = val;
                         }
@@ -223,8 +219,8 @@ public class Energizer {
                         continue;
                     }
                 }
-                if (min > Double.MAX_VALUE - 0.00001){
-                    min = (cl_cu_cr[i][j][0] +cl_cu_cr[i][j][1]+cl_cu_cr[i][j][2]) /3;
+                if (min == Double.MAX_VALUE){
+                    min = Math.min(cl_cu_cr[i][j][0],cl_cu_cr[i][j][2]);
                 }
                 result[i][j] = min;
 

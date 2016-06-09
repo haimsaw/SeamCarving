@@ -20,20 +20,6 @@ public class Carver {
 
         MyColor[][] img = Services.getImage(input_image_filename);
 
-//        MyColor[][] img = new MyColor[7][7];
-//        for (int i=0; i<img.length; i++) {
-//            for (int j=0; j<img[0].length; j++) {
-//                img[i][j] = new MyColor(1,1,1);
-//            }
-//        }
-//        img[0][0] = new MyColor(2,2,2);
-//        img[1][1] = new MyColor(2,2,2);
-//        img[2][2] = new MyColor(2,2,2);
-//        img[3][3] = new MyColor(2,2,2);
-//        img[4][4] = new MyColor(2,2,2);
-//        img[5][5] =  new MyColor(2,2,2);
-//        img[6][6] =  new MyColor(3,3,3);
-
         long start = System.nanoTime();
 
         int width = img[0].length;
@@ -67,10 +53,10 @@ public class Carver {
     }
 
     private static MyColor[][] remove_seams(MyColor[][] img, int num_of_seams_ro_remove, int energy_type) {
-        int width = img[0].length;
-        int height = img.length;
-
         for (int i = 0; i <num_of_seams_ro_remove ; i++) {
+
+            int width = img[0].length;
+            int height = img.length;
 
             System.out.println(i); // todo- delete
             double[][] dynamic = Energizer.energy(img, energy_type);
