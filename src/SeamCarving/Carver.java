@@ -11,6 +11,11 @@ import java.util.List;
 public class Carver {
 
     public static void main(String [] args) throws IOException {
+
+        /**
+         * The code works on JPEG files only!
+         */
+
         String input_image_filename = args[0];
         int num_of_colums = Integer.parseInt(args[1]);
         int num_of_rows = Integer.parseInt(args[2]);
@@ -20,7 +25,7 @@ public class Carver {
 
         MyColor[][] img = Services.getImage(input_image_filename);
 
-        long start = System.nanoTime();
+//        long start = System.nanoTime();
 
         int width = img[0].length;
         int height = img.length;
@@ -44,8 +49,8 @@ public class Carver {
 
         long a = 1000000000;
         a *= 60;
-        System.out.print("time: ");
-        System.out.println((System.nanoTime()-start)/a);
+//        System.out.print("time: ");
+//        System.out.println((System.nanoTime()-start)/a);
 
         Services.saveImage(img, output_image_filename);
 
@@ -58,7 +63,6 @@ public class Carver {
             int width = img[0].length;
             int height = img.length;
 
-            System.out.println(i); // todo- delete
             double[][] dynamic = Energizer.energy(img, energy_type);
             List<Seem> seems = Services.get_best_seem_list(1, dynamic);
 
@@ -92,12 +96,6 @@ public class Carver {
         }
 
 
-//        int sum = 0;
-//        int m;
-//        for (m = 0; m< pixelsToAdd[0].length; m++) {
-//            sum += pixelsToAdd[0][m];
-//        }
-//        System.out.println(sum);
 
         MyColor[][] newImg = addAndMultiplyPixels(imgCopy, pointersMatrix);
 
@@ -132,29 +130,6 @@ public class Carver {
         return bigger;
     }
 
-
-
-
-
-//        for (int i=0; i<img.length; i++) {
-//            int numOfAlreadyAdded = 0;
-//            for (int j=0; j<img[0].length; j++) {
-//                if (pixelsToAdd[i][j] == 1) {
-//                    MyColor c = img[i][j];
-//                    newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
-//                    newImg[i][j+numOfAlreadyAdded+1] = new MyColor(c.r, c.g, c.b);
-//                    numOfAlreadyAdded += 1;
-//                } else {
-//                    MyColor c = img[i][j];
-//                    newImg[i][j+numOfAlreadyAdded] = new MyColor(c.r, c.g, c.b);
-//                }
-//            }
-//            if (numOfAlreadyAdded != numOfSeems) {
-//                System.out.println("Problem");
-////            }
-//        }
-//        return newImg;
-//    }
 
 }
 

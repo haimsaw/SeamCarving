@@ -196,6 +196,7 @@ public class Energizer {
         return cl_cu_cr;
     }
 
+
     public static double[][] createDynamicMap2(double[][][] cl_cu_cr){
         int width = cl_cu_cr[0].length;
         int height = cl_cu_cr.length;
